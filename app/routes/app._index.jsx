@@ -3,6 +3,7 @@ import { useFetcher } from "react-router";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { authenticate } from "../shopify.server";
+import { StarFilledIcon } from '@shopify/polaris-icons';
 
 
 import { InlineStack } from "@shopify/polaris";
@@ -335,8 +336,8 @@ export default function Index() {
   };
 
   return (
-    <AppProvider i18n={enTranslations}>
-    
+   <AppProvider i18n={enTranslations}>
+
       <Page title="Reviews">
         <BlockStack gap="400">
           <Card>
