@@ -1,519 +1,12 @@
 import { useState } from 'react';
-import loox from '../icons/loox.svg';
-import yotpo from '../icons/yotpo.svg';
-import air from '../icons/air.svg';
-import arereview from '../icons/arereview.svg';
-import klaviyo from '../icons/klaviyo.svg';
-import { AppProvider } from '@shopify/polaris';
-import enTranslations from '@shopify/polaris/locales/en.json';
-import { Card, Text, BlockStack, Button, Layout, Box } from "@shopify/polaris";
+import ImportReviewsPage from './app.import_review';
+import RequestReviewsPage from './app.request_review';
+import RequestSchedulingPage from './app.request_scheduling';
+import EmailTemplatesPage from './app.email_templates';
+import ProductManagementPage from './app.product_management';
+import PublishingModerationPage from './app.publishing_moderation';
+import WidgetsPage from './app.widgets';
 
-const ImportCard = ({ title, description, logos, onImport }) => {
-  return (
-    <div style={{ backgroundColor: '#fff', border: '1px solid #e0e0e0', borderRadius: '8px', padding: '20px', marginBottom: '16px' }}>
-      <h3 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '12px' }}>{title}</h3>
-      
-      <div style={{ display: 'flex', gap: '8px', flexWrap: 'wrap', marginBottom: '12px' }}>
-        {logos.map((logo, index) => (
-          <div
-            key={index}
-            style={{
-              width: '56px',
-              height: '56px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: '#f5f5f5',
-              borderRadius: '6px',
-            }}
-          >
-            <img
-              src={logo}
-              alt="review platform"
-              style={{ width: '40px', height: '40px', objectFit: 'contain' }}
-            />
-          </div>
-        ))}
-      </div>
-
-      <p style={{ fontSize: '14px', color: '#666', marginBottom: '16px' }}>
-        {description}
-      </p>
-
-      <button 
-        onClick={onImport}
-        style={{
-          backgroundColor: '#0066cc',
-          color: 'white',
-          border: 'none',
-          padding: '8px 16px',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          fontWeight: '500'
-        }}
-      >
-        Import from apps
-      </button>
-    </div>
-  );
-};
-
-const SpreadsheetCard = ({ title, description, icon, onImport }) => {
-  return (
-    <div style={{ backgroundColor: '#fff', border: '1px solid #e0e0e0', borderRadius: '8px', padding: '20px', marginBottom: '16px' }}>
-      <div style={{ display: 'flex', gap: '16px', alignItems: 'flex-start', marginBottom: '16px' }}>
-        <div
-          style={{
-            width: '56px',
-            height: '56px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#f5f5f5',
-            borderRadius: '6px',
-            flexShrink: 0,
-          }}
-        >
-          <img
-            src={icon}
-            alt="spreadsheet"
-            style={{ width: '40px', height: '40px', objectFit: 'contain' }}
-          />
-        </div>
-        <div>
-          <h3 style={{ fontSize: '16px', fontWeight: '600', marginBottom: '8px' }}>{title}</h3>
-          <p style={{ fontSize: '14px', color: '#666' }}>
-            {description}
-          </p>
-        </div>
-      </div>
-
-      <button 
-        onClick={onImport}
-        style={{
-          backgroundColor: '#0066cc',
-          color: 'white',
-          border: 'none',
-          padding: '8px 16px',
-          borderRadius: '4px',
-          cursor: 'pointer',
-          fontSize: '14px',
-          fontWeight: '500'
-        }}
-      >
-        Import from a spreadsheet
-      </button>
-    </div>
-  );
-};
-
-const ImportReviewsPage = () => {
-  const handleImportFromApps = () => {
-    console.log('Import from review apps');
-  };
-
-  const handleImportFromSpreadsheet = () => {
-    console.log('Import from spreadsheet');
-  };
-
-  const reviewPlatformLogos = [
-    loox,
-    yotpo,
-    air,
-    arereview,
-    klaviyo,
-  ];
-
-  const sheetsIcon = 'https://www.gstatic.com/images/branding/product/1x/sheets_48dp.png';
-
-  return (
-    <div>
-      <ImportCard
-        title="From review apps"
-        description="Bring your reviews from Loox, Yotpo, Air Reviews, Shopify, Klaviyo, Arerereviews and others."
-        logos={reviewPlatformLogos}
-        onImport={handleImportFromApps}
-      />
-
-      <SpreadsheetCard
-        title="From a spreadsheet"
-        description="Import your own reviews from a spreadsheet format."
-        icon={sheetsIcon}
-        onImport={handleImportFromSpreadsheet}
-      />
-
-      <div style={{ backgroundColor: '#fff', border: '1px solid #e0e0e0', borderRadius: '8px', padding: '40px', textAlign: 'center' }}>
-        <img src="https://cdn.shopify.com/s/files/1/0262/4071/2726/files/emptystate-files.png" alt="settings" style={{ maxWidth: '200px', marginBottom: '20px' }} />
-        <h3 style={{ fontSize: '18px', fontWeight: '600', marginBottom: '8px' }}>Configure your settings</h3>
-        <p style={{ fontSize: '14px', color: '#666', marginBottom: '20px' }}>
-          Customize your review app settings, configure email templates, and manage your preferences here.
-        </p>
-        <button 
-          style={{
-            backgroundColor: '#0066cc',
-            color: 'white',
-            border: 'none',
-            padding: '8px 16px',
-            borderRadius: '4px',
-            cursor: 'pointer',
-            fontSize: '14px',
-            fontWeight: '500',
-            marginRight: '8px'
-          }}
-        >
-          Get started
-        </button>
-        <a href="https://help.shopify.com" style={{
-          color: '#0066cc',
-          textDecoration: 'none',
-          fontSize: '14px',
-          fontWeight: '500'
-        }}>
-          Learn more
-        </a>
-      </div>
-    </div>
-  );
-};
-
-
-// for request review page
-const RequestReviewsPage = () => (
-  <AppProvider i18n={enTranslations}>
-    <Layout>
-      <Layout.Section>
-        {/* Schedule requests card */}
-        <Card>
-          <BlockStack gap="400">
-            <Text variant="headingMd" as="h2">
-              Email review requests
-            </Text>
-
-            {/* Schedule requests */}
-            <Card>
-              <BlockStack gap="300">
-                <Text variant="headingSm" as="h3">
-                  Schedule requests for previous Shopify orders
-                </Text>
-
-                <Text variant="bodyMd" color="subdued">
-                  Schedule review requests in batch for orders placed before you installed the app.
-                </Text>
-
-                <Button variant="primary">Schedule requests</Button>
-              </BlockStack>
-            </Card>
-
-            {/* Manual requests card */}
-            <Card>
-              <BlockStack gap="300">
-                <Text variant="headingSm" as="h3">
-                  Send manual requests
-                </Text>
-
-                <Text variant="bodyMd" color="subdued">
-                  Send manual review requests to a single customer or multiple customers via spreadsheet CSV.
-                </Text>
-
-                <Box display="flex" gap="300">
-                  <Button>Single request</Button>
-                  <Button variant="primary">Multiple requests</Button>
-                </Box>
-              </BlockStack>
-            </Card>
-          </BlockStack>
-        </Card>
-      </Layout.Section>
-    </Layout>
-    <Layout>
-      <Layout.Section>
-        {/* Schedule requests card */}
-        <Card>
-          <BlockStack gap="400">
-            <Text variant="headingMd" as="h2">
-              Collection channels
-            </Text>
-
-            {/* Schedule requests */}
-            <Card>
-              <BlockStack gap="300">
-                <Text variant="headingSm" as="h3">
-                  Manage email review requests
-                </Text>
-
-                <Text variant="bodyMd" color="subdued">
-                  Collect review request via email on autopilot.
-                </Text>
-
-               
-              </BlockStack>
-            </Card>
-            {/* for links and QR code*/}
-            <Card>
-              <BlockStack gap="300">
-                <Text variant="headingSm" as="h3">
-                  Links, QR codes and point of sale review collection
-                </Text>
-
-                <Text variant="bodyMd" color="subdued">
-                  Share QR codes or links in print, point of sale material, communications or on receipts so your customers can write a review.
-                </Text>
-
-                <box display='flex' >
-                  <Button variant="primary">Manage</Button>
-                </box>
-              </BlockStack>
-            </Card>
-
-            {/* SMS requests card */}
-            <Card>
-              <BlockStack gap="300">
-                <Text variant="headingSm" as="h3">
-                  SMS requests
-                </Text>
-
-                <Text variant="bodyMd" color="subdued">
-                  Send manual review requests to a single customer or multiple customers via spreadsheet CSV.
-                </Text>
-
-                <Box display="flex" gap="300">
-                  <Button variant="primary">Manage</Button>
-                </Box>
-              </BlockStack>
-            </Card>
-
-            <Card>
-              <BlockStack gap="300">
-                <Text variant="headingSm"  as="h3" > 
-                  Push notications
-                </Text>
-
-                <Text variant='bodyMd' color="subdued" > 
-                 Integrate with PushOwl to send review requests and remind customers to submit pictures.
-                </Text>
-
-              </BlockStack>
-            </Card>
-
-            <Card>
-              <BlockStack gap="300">
-                <Text variant="headingSm" as="h2" >
-                  WhatsApp and email marketing integrations  
-                </Text>
-                <Text variant='bodyMd' color="subdued" >
-                  Send review requests via Klaviyo, Dondy, Reviewbit and others.
-                </Text>
-                <Box display="flex" gap="300">
-                  <Button variant="primary">Manage</Button>
-                </Box>
-              </BlockStack>
-            </Card>
-
-          </BlockStack>
-        </Card>
-      </Layout.Section>
-    </Layout>
-  </AppProvider>
-);
-
-
-
-
-
-// for Request scheduling page
-const RequestSchedulingPage = () => (
-  <AppProvider i18n={enTranslations}>
-    <Layout>
-      <Layout.Section>
-      <Card>
-
-      </Card>
-      </Layout.Section>
-    </Layout>
-  </AppProvider>
-);
-
-
-// for Email templates page
-const EmailTemplatesPage = () => (
-    <AppProvider i18n={enTranslations}>
-      <Layout>
-        <Layout.Section>
-          <Card>
-            <BlockStack gap="400">
-              <Text variant="headingSm">
-                Email templates
-              </Text>
-              <Card>
-                <BlockStack gap="300">
-                  <Text variant="headingSm">
-                    Review request and reminder emails
-                  </Text>
-                  <Text>
-                    Create and customize your review requests emails.
-                  </Text>
-                  <Card>
-                    <BlockStack gap="300">
-                      <Text variant="headingSm">
-                        Smart Email Template
-                      </Text>
-                      <Text>
-                        Smart styling
-                      </Text>
-                    </BlockStack>
-                  </Card>
-                </BlockStack>
-              </Card>
-            </BlockStack>
-          </Card>
-        </Layout.Section>
-      </Layout>
-
-      <layout>
-        <Layout.Section>
-          <Card>
-            <BlockStack gap="400">
-            <Text variant="headingSm">
-              Post-review notifications
-            </Text>
-            <Card>
-              <BlockStack gap="400">
-                <Text variant="bodyMd" >
-                  Review confirmation
-                </Text>
-                <Text variant="bodyMd" tone="critical">
-                  Send web visitor a confirmation email when they leave a review.
-                </Text>
-                <Box display="flex" gap="300">
-                  <Button >Edit</Button>
-                </Box>
-              </BlockStack>
-            </Card>
-            <Card>
-              <BlockStack gap="400">
-                <Text variant="bodyMd" >
-                  Reply notification
-                </Text>
-                <Text variant="bodyMd" tone="critical">
-                  Notify reviewer by email when you reply to their review.
-                </Text>
-                <Box display="flex" gap="300">
-                  <Button >Edit</Button>
-                </Box>
-              </BlockStack>
-            </Card>
-            <Card>
-              <BlockStack gap="400">
-                <Text variant="bodyMd" >
-                  Media reminder
-                </Text>
-                <Text variant="bodyMd" tone="critical">
-                  Send a reminder email if customers leave a review without a picture or video.
-                </Text>
-                <Box display="flex" gap="300">
-                  <Button >Edit</Button>
-                </Box>
-              </BlockStack>
-            </Card>
-            <Card>
-              <BlockStack gap="340">
-                <Text variant="bodyMd" >
-                  Q&A notification
-                </Text>
-                <Text variant="bodyMd" tone="critical">
-                  Notify customers when you reply to their questions.
-                </Text>
-                <Box display="flex" gap="400">
-                  <Button >Edit</Button>
-                </Box>
-              </BlockStack>
-            </Card>
-            </BlockStack>
-          </Card>
-          <Card>
-             <Layout>
-                <Layout.Section>
-                   <BlockStack gap="400">
-                    <Text variant="headingSm">Discounts and rewards</Text>
-                  
-                      <Card>
-                          <BlockStack gap="300">
-                            <Text variant="bodyMd" >
-                              Coupon
-                            </Text>
-                            <Text variant="bodyMd" tone="critical">
-                              Manage the emails used to send coupon discounts to your loyal customers.
-                            </Text>
-                            <Box display="flex" gap="400">
-                              <Button >Edit</Button>
-                            </Box>
-                          </BlockStack>  
-                      </Card>
-                      <Card>
-                          <BlockStack gap="300">
-                            <Text variant="bodyMd" >
-                              Coupon reminder
-                            </Text>
-                            <Text variant="bodyMd" tone="critical">
-                              Send a reminder email to customers who have not used their coupon.
-                            </Text>
-                            <Box display="flex" gap="400">
-                              <Button >Edit</Button>
-                            </Box>
-                          </BlockStack>  
-                      </Card>
-                      <Card>
-                          <BlockStack gap="300">
-                            <Text variant="bodyMd" >
-                              Referral customer reward
-                            </Text>
-                            <Text variant="bodyMd" tone="critical">
-                              Manage emails to send rewards to customers that successfully referred a friend (for two-way incentives only).
-                            </Text>
-                            <Box display="flex" gap="400">
-                              <Button >Edit</Button>
-                            </Box>
-                          </BlockStack>  
-                      </Card>
-
-                    </BlockStack>  
-                </Layout.Section>
-              </Layout>
-            
-          </Card>
-        </Layout.Section>
-      </layout>  
-    </AppProvider> 
-);
-
-// for Product Management Page
-
-const ProductManagementPage = () => (
-  <AppProvider i18n={enTranslations}>
-    <Layout>
-      <Layout.Section>
-        <Card>
-
-        </Card>
-      </Layout.Section>
-    </Layout>
-  </AppProvider>
-);
-
-
-// for Publishing Moderation Page
-const PublishingModerationPage = () => (
-  <AppProvider i18n={enTranslations}>
-    <Layout>
-      <Layout.Section>
-        <Card>
-          
-        </Card>
-      </Layout.Section>
-    </Layout>
-  </AppProvider>
-);
 
 const SidebarNav = ({ activeSection, onNavigate, searchQuery, onSearchChange }) => {
   const menuItems = [
@@ -590,13 +83,12 @@ const SidebarNav = ({ activeSection, onNavigate, searchQuery, onSearchChange }) 
                 }
               }}
             >
-              <span>{item.icon} {item.label}</span>
+              {item.label}
             </button>
           ))}
         </div>
       </div>
-
-      <div style={{ borderBottom: '1px solid #e0e0e0', marginBottom: '16px' }} />
+            <div style={{ borderBottom: '1px solid #e0e0e0', marginBottom: '16px' }} />
 
       <div>
         <p style={{ fontSize: '12px', fontWeight: '600', color: '#999', marginBottom: '8px', textTransform: 'uppercase' }}>
@@ -629,7 +121,7 @@ const SidebarNav = ({ activeSection, onNavigate, searchQuery, onSearchChange }) 
               }
             }}
           >
-             Widgets
+            Widgets
           </button>
           <button
             onClick={() => onNavigate('groups')}
@@ -657,18 +149,15 @@ const SidebarNav = ({ activeSection, onNavigate, searchQuery, onSearchChange }) 
               }
             }}
           >
-             Product groups
+            Product groups
           </button>
         </div>
       </div>
-
-
-
     </div>
   );
 };
 
-export default function JudgemeApp() {
+export default function SettingsPage() {
   const [activeSection, setActiveSection] = useState('import');
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -686,8 +175,11 @@ export default function JudgemeApp() {
         return <ProductManagementPage />;
       case 'publishing':
         return <PublishingModerationPage />;
+      case 'widgets':
+        return <WidgetsPage/>;
+      
       default:
-        return <div style={{ backgroundColor: '#fff', border: '1px solid #e0e0e0', borderRadius: '8px', padding: '20px' }}>Page under development</div>;
+        return <ImportReviewsPage />;
     }
   };
 
@@ -699,8 +191,10 @@ export default function JudgemeApp() {
       'templates': 'Email templates',
       'products': 'Product management',
       'publishing': 'Publishing and moderation',
+      'widgets': 'Widgets',
+      'groups': 'Product groups',
     };
-    return headings[activeSection] || 'Judge.me Reviews';
+    return headings[activeSection] || 'Settings';
   };
 
   return (
