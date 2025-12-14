@@ -6,6 +6,9 @@ import EmailTemplatesPage from './app.email_templates';
 import ProductManagementPage from './app.product_management';
 import PublishingModerationPage from './app.publishing_moderation';
 import WidgetsPage from './app.widgets';
+import ProductGroupPage from './app.productgroup';
+import SocialSharingPage from './app.social_sharing';
+import GoogleAndSeo from './app.google_and_seo';
 
 
 const SidebarNav = ({ activeSection, onNavigate, searchQuery, onSearchChange }) => {
@@ -123,6 +126,8 @@ const SidebarNav = ({ activeSection, onNavigate, searchQuery, onSearchChange }) 
           >
             Widgets
           </button>
+
+
           <button
             onClick={() => onNavigate('groups')}
             style={{
@@ -151,6 +156,66 @@ const SidebarNav = ({ activeSection, onNavigate, searchQuery, onSearchChange }) 
           >
             Product groups
           </button>
+
+
+          <button
+            onClick={() => onNavigate('social')}
+            style={{
+              width: '100%',
+              padding: '8px 12px',
+              textAlign: 'left',
+              border: 'none',
+              backgroundColor: activeSection === 'social' ? '#e8f2ff' : 'transparent',
+              color: activeSection === 'social' ? '#0066cc' : '#333',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: activeSection === 'social' ? '600' : '400',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              if (activeSection !== 'social') {
+                e.target.style.backgroundColor = '#f0f0f0';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeSection !== 'social') {
+                e.target.style.backgroundColor = 'transparent';
+              }
+            }}
+          >
+            Social Sharing
+          </button>
+
+
+          <button
+            onClick={() => onNavigate('google')}
+            style={{
+              width: '100%',
+              padding: '8px 12px',
+              textAlign: 'left',
+              border: 'none',
+              backgroundColor: activeSection === 'google' ? '#e8f2ff' : 'transparent',
+              color: activeSection === 'google' ? '#0066cc' : '#333',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              fontSize: '14px',
+              fontWeight: activeSection === 'google' ? '600' : '400',
+              transition: 'all 0.2s',
+            }}
+            onMouseEnter={(e) => {
+              if (activeSection !== 'google') {
+                e.target.style.backgroundColor = '#f0f0f0';
+              }
+            }}
+            onMouseLeave={(e) => {
+              if (activeSection !== 'google') {
+                e.target.style.backgroundColor = 'transparent';
+              }
+            }}
+          >
+            Google and Sharing
+          </button>
         </div>
       </div>
     </div>
@@ -177,9 +242,15 @@ export default function SettingsPage() {
         return <PublishingModerationPage />;
       case 'widgets':
         return <WidgetsPage/>;
+      case 'groups':
+        return <ProductGroupPage/>;
+      case 'social':
+        return <SocialSharingPage/>;
+      case 'google':
+        return <GoogleAndSeo/>;
       
       default:
-        return <ImportReviewsPage />;
+        return <SocialSharingPage/>;
     }
   };
 
@@ -193,6 +264,8 @@ export default function SettingsPage() {
       'publishing': 'Publishing and moderation',
       'widgets': 'Widgets',
       'groups': 'Product groups',
+      'social': 'Social sharing',
+      'google': 'Google and seo',
     };
     return headings[activeSection] || 'Settings';
   };

@@ -3,6 +3,9 @@ import yotpo from '../icons/yotpo.svg';
 import air from '../icons/air.svg';
 import arereview from '../icons/arereview.svg';
 import klaviyo from '../icons/klaviyo.svg';
+import ManualReviewsImport from './app.manual_reviews_import';
+import { useState } from 'react';
+
 
 const ImportCard = ({ title, description, logos, onImport }) => {
   return (
@@ -105,13 +108,24 @@ const SpreadsheetCard = ({ title, description, icon, onImport }) => {
 };
 
 export default function ImportReviewsPage() {
+
+  // Add state to track current page
+  const[ currentPage, setCurrentPage] = useState(0);
+
+
   const handleImportFromApps = () => {
     console.log('Import from review apps');
   };
 
   const handleImportFromSpreadsheet = () => {
-    console.log('Import from spreadsheet');
+    setCurrentPage('manual');
   };
+
+  // Show SocialSharingPage if currentPage is 'social'
+
+  if (currentPage === 'manual'){
+    return <ManualReviewsImport/>;
+  }
 
   const reviewPlatformLogos = [
     loox,

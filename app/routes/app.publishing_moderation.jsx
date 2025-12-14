@@ -7,7 +7,7 @@ export default function PublishingModerationPage() {
   const [webReviewsSelected, setWebReviewsSelected] = useState(['no restriction']);
   const [personalInfoSelected, setPersonalInfoSelected] = useState(['Censor personal information and publish review']);
   const [profanityEnabled, setProfanityEnabled] = useState(true);
-  const [profanityFilterMode, setProfanityFilterMode] = useState(['Replace banned words with asterisks (***) and publish review']);
+  const [profanityFilterMode, setProfanityFilterMode] = useState(['Disabled']);
   const [blocklistWords, setBlocklistWords] = useState('');
   const [uploadedFile, setUploadedFile] = useState(null);
   const [useStandardBlocklist, setUseStandardBlocklist] = useState(true);
@@ -26,7 +26,7 @@ export default function PublishingModerationPage() {
         size: file.size,
         uploadedAt: new Date().toLocaleDateString(),
       });
-    }
+    }    
   }, []);
 
   const handleUploadClick = () => {
@@ -178,11 +178,11 @@ export default function PublishingModerationPage() {
                             </Text>
                           </BlockStack>
                           <Button
-                            variant="tertiary"
+                            variant="primary"
                             onClick={handleDeleteFile}
                             accessibilityLabel="Delete file"
                           >
-                            🗑️
+                           Delete file 
                           </Button>
                         </InlineStack>
                       </div>
