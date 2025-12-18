@@ -1,8 +1,9 @@
 import { AppProvider } from '@shopify/polaris';
 import enTranslations from '@shopify/polaris/locales/en.json';
-import { Layout, Card, Text, BlockStack, InlineStack, Divider, Select } from "@shopify/polaris";
+import { Layout, Card, Text, BlockStack, InlineStack, Divider, Select, Button } from "@shopify/polaris";
 import { useState } from 'react';
 import Papa from 'papaparse';
+import SelectProductIdentifier from './app.select_product_identifier';
 
 export default function MapFileColumns() {
   const [csvData, setCsvData] = useState([]);
@@ -70,6 +71,19 @@ export default function MapFileColumns() {
     ...columns.map(col => ({ label: col, value: col })),
   ];
 
+
+//   Handling Next page
+   const [NextPage, setNextPage] = useState(0);
+
+       const handleSelectPoductIdentifier = () => {
+        setNextPage('ProductIdentifier');
+    
+    };
+
+    if (NextPage === 'ProductIdentifier') {
+        return <SelectProductIdentifier/>;
+    }
+
   return (
     <AppProvider i18n={enTranslations}>
       <Layout>
@@ -116,11 +130,16 @@ export default function MapFileColumns() {
               </BlockStack>
             </BlockStack>
           </Card>
+
+          <InlineStack gap="200" >
+                <Button>Back</Button>
+                <Button onClick={handleSelectPoductIdentifier}>Next</Button>
+            </InlineStack>
         </Layout.Section>
       </Layout>
     </AppProvider>
   );
-}
+};
 
 const Placeholder = ({
   label = '',
