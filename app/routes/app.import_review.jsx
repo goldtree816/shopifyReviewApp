@@ -7,6 +7,7 @@ import ManualReviewsImport from './app.manual_reviews_import';
 import { useState } from 'react';
 import {AppProvider, Page, Card, Button, Layout, Text, Box, InlineStack, BlockStack,  Image, Link,} from '@shopify/polaris';
 import '@shopify/polaris/build/esm/styles.css';
+import MapFileColumns from './app.Map_file_columns';
 
 const ImportCard = ({ title, description, logos, onImport }) => {
   return (
@@ -132,13 +133,15 @@ function ImportReviewsPageContent() {
     return <ManualReviewsImport />;
   }
 
+
+ 
   const reviewPlatformLogos = [loox, yotpo, air, arereview, klaviyo];
 
   const sheetsIcon =
     'https://www.gstatic.com/images/branding/product/1x/sheets_48dp.png';
 
   return (
-    <Page title="Import Reviews">
+    <Page >
       <Layout>
         <Layout.Section>
           <BlockStack gap="400">

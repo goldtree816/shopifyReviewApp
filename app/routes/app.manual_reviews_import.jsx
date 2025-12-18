@@ -1,66 +1,41 @@
-import React, { useCallback, useRef, useState } from "react";
-
-import { AppProvider, Layout, Card, BlockStack, Text, Button, InlineStack, ChoiceList, Checkbox   } from '@shopify/polaris';
+import  { useCallback, useRef, useState } from "react";
+import { AppProvider,  Layout, Card, BlockStack, Text, Button, InlineStack, ChoiceList, Checkbox, Box   } from '@shopify/polaris';
 import enTranslations from '@shopify/polaris/locales/en.json';
-
-
+import MapFileColumns from "./app.Map_file_columns";
 
 export default function ManualReviewsImport(){
 
     const [reviews, setReviews] = useState(['Product reviews']);
     const handleReviews = useCallback((value) => setReviews(value), []);
     
-    
     const [checked, setChecked] = useState(true);
     const handleChecked = useCallback( (newChecked) => setChecked(newChecked), [] );
 
     const [isDownloading, setIsDownloading] = useState(false);
     
-    //  Download existing CSV from public folder
-  const handleDownload = useCallback(() => {
-    setIsDownloading(true);
-
-    try {
-      // Create link element
-      const link = document.createElement('a');
-      
-      // Set the file URL from public folder
-      link.href = '/files/blocklist.csv';
-      
-      // Set the download file name
-      link.download = 'blocklist.csv';
-      
-      // Add link to body
-      document.body.appendChild(link);
-      
-      // Trigger download
-      link.click();
-      
-      // Remove link from body
-      document.body.removeChild(link);
-      
-      setIsDownloading(false);
-    } catch (error) {
-      console.error('Download failed:', error);
-      setIsDownloading(false);
-    }
-  }, []);
-
-
+    const handleDownload = useCallback(() => {
+      setIsDownloading(true);
+      try {
+        const link = document.createElement('a');
+        link.href = '/files/blocklist.csv';
+        link.download = 'blocklist.csv';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        setIsDownloading(false);
+      } catch (error) {
+        console.error('Download failed:', error);
+        setIsDownloading(false);
+      }
+    }, []);
 
     const[uploadedFile, setUploadedFile] = useState(null);
     const fileInputRef  = useRef(null);
 
-
     const handleFileUpload = useCallback((event) => {
-        const file = event.target.current?.[0];
-
-        if (file){
-            setUploadedFile({
-                name: file.name,
-                size: file.size,
-                uploadAt: new Date().toLocaleDateString(),
-            });
+        const file = event.target.files[0];
+        if (file) {
+            setUploadedFile(file);
         }
     }, []);
 
@@ -68,9 +43,34 @@ export default function ManualReviewsImport(){
         fileInputRef.current?.click();
     };
 
+    const handleDeleteFile = () => {
+        setUploadedFile(null);
+        fileInputRef.current.value = '';
+    };
+
+    const [NextPage, setNextPage] = useState(0);
+
+    const handleBack = () => {
+        if (NextPage > 0) setNextPage(NextPage - 1);
+    };
+
+    const handleMapFile = () => {
+        if (uploadedFile) {
+            setNextPage('map');
+        } else {
+            alert('Please upload a file first');
+        }
+    };
+  
+    if (NextPage === 'map') {
+        return <MapFileColumns uploadedFile={uploadedFile}/>;
+    }
+  
     return(
          <AppProvider i18n={enTranslations}>
-
+          <Box style={{marginBottom:"10px"}}>
+            <Button>Back</Button>
+          </Box>
             <Layout>
                 <Layout.Section>
                     <Card>
@@ -83,15 +83,12 @@ export default function ManualReviewsImport(){
                                 <Button variant="primary"
                                  onClick={handleDownload}
                                  disabled={isDownloading}
-                            
                             > Download CSV sample</Button>
                             <Button > Copy GoogleSheet template</Button></InlineStack>
 
                         </BlockStack>
 
                         <BlockStack gap="800">
-
-                            {/*  for file upload */}
 
                             <Text variant="bodyMd">
                                 Upload your file below. In the next steps, you'll be able to match columns, adjust date formats, and assign reviews to products
@@ -101,13 +98,11 @@ export default function ManualReviewsImport(){
                             <input
                             ref={fileInputRef}
                             type="file"
-                            accept=".txt,.csv,.pdf"
+                            accept=".csv,.xlsx,.xls"
                             onChange={handleFileUpload}
-                            
+                            style={{display: 'none'}}
                             />
 
-                        {/* display file uploaded info */}
- 
                     {uploadedFile && (
                       <div style={{ border: '1px solid #e5e7eb', borderRadius: '6px', padding: '12px', backgroundColor: '#fff' }}>
                         <InlineStack align="space-between" blockAlign="center">
@@ -116,7 +111,7 @@ export default function ManualReviewsImport(){
                               {uploadedFile.name}
                             </Text>
                             <Text tone="subdued" variant="bodySm">
-                              Uploaded on {uploadedFile.uploadedAt}
+                              Uploaded on {new Date().toLocaleDateString()}
                             </Text>
                           </BlockStack>
                           <Button
@@ -130,7 +125,6 @@ export default function ManualReviewsImport(){
                       </div>
                     )}
 
-
                             <Text variant="headingSm">Import reveiws as</Text>
                             <ChoiceList
                                 choices ={[
@@ -138,31 +132,28 @@ export default function ManualReviewsImport(){
                                         label: 'Product reviews',
                                         value: 'Product reviews',
                                     },
-
                                     {
                                         label: 'Store reviews',
                                         value: 'Store reviews',
                                     }
- 
-
                                 ]}
                                 selected ={reviews}
                                 onChange ={handleReviews}
-                                
                             />
                             <Checkbox
-
-                            label="I confirm my reviews are genuine and I have permission to import them"
-                            checked={checked}
-                            onChange={handleChecked}
-                           
-                            
+                                label="I confirm my reviews are genuine and I have permission to import them"
+                                checked={checked}
+                                onChange={handleChecked}
                             />   
 
                         </BlockStack>
-                    </Card>
+                    </Card >
                 </Layout.Section>
             </Layout>
+            <InlineStack gap="200" >
+              <Button onClick={handleBack}>Back</Button>
+              <Button onClick={handleMapFile}>Next</Button>
+            </InlineStack>
          </AppProvider>
     )
 }
