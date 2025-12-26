@@ -7,7 +7,7 @@ import ManualReviewsImport from './app.manual_reviews_import';
 import { useState } from 'react';
 import {AppProvider, Page, Card, Button, Layout, Text, Box, InlineStack, BlockStack,  Image, Link,} from '@shopify/polaris';
 import '@shopify/polaris/build/esm/styles.css';
-import MapFileColumns from './app.Map_file_columns';
+
 
 const ImportCard = ({ title, description, logos, onImport }) => {
   return (

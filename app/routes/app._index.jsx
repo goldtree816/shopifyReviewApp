@@ -1,30 +1,15 @@
 import { useEffect, useState, useCallback } from "react";
-import { useFetcher } from "react-router";
+import { useFetcher, useNavigate } from "react-router";
 import { useAppBridge } from "@shopify/app-bridge-react";
 import { boundary } from "@shopify/shopify-app-react-router/server";
 import { authenticate } from "../shopify.server";
-
-
-
 import { InlineStack } from "@shopify/polaris";
 
-import { 
-  AppProvider, 
-  Page, 
-  Card, 
-  Tabs, 
-  BlockStack, 
-  Text, 
-  EmptyState, 
-  Button, 
-  ButtonGroup,
-  TextField,
-  Popover,
-  ActionList,
-  Icon
-} from "@shopify/polaris";
+import { AppProvider, Page, Card, Tabs, BlockStack, Text, EmptyState, Button, ButtonGroup,
+   TextField, Popover, ActionList, Icon } from "@shopify/polaris";
 import { SearchIcon, FilterIcon, SortIcon } from '@shopify/polaris-icons';
 import enTranslations from "@shopify/polaris/locales/en.json";
+import PublishingModerationPage from "./app.publishing_moderation";
 
 export const loader = async ({ request }) => {
   await authenticate.admin(request);
@@ -75,6 +60,18 @@ export default function Index() {
     () => setFilterPopoverActive((active) => !active),
     [],
   );
+  
+  // for handling import button 
+
+  const navigate = useNavigate();
+
+  const handleImport = () => {
+    navigate('/app/settings');
+  }
+
+
+  
+  
 
   const tabs = [
     { id: "reviews", content: "Reviews" },
@@ -127,8 +124,8 @@ export default function Index() {
             <BlockStack gap="400">
               <InlineStack align="end">
                 <ButtonGroup>
-                  <Button>Import</Button>
-                  <Button>Publish and moderate</Button>
+                  <Button onClick={handleImport}>Import</Button>
+                  <Button >Publish and moderate</Button>
                   <Button>Edit product review groups</Button>
                   <Button>Add product</Button>
                 </ButtonGroup>
